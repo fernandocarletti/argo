@@ -39,7 +39,7 @@ func (wc *controllerCollector) collectWorkflowStatuses(wfs []*wfv1.Workflow) []p
 		return nil
 	}
 
-	getOptsByPahse := func(phase wfv1.NodePhase) prometheus.GaugeOpts {
+	getOptsByPhase := func(phase wfv1.NodePhase) prometheus.GaugeOpts {
 		return prometheus.GaugeOpts{
 			Namespace:   argoNamespace,
 			Subsystem:   workflowsSubsystem,
@@ -49,12 +49,12 @@ func (wc *controllerCollector) collectWorkflowStatuses(wfs []*wfv1.Workflow) []p
 		}
 	}
 	gauges := map[wfv1.NodePhase]prometheus.Gauge{
-		wfv1.NodePending:   prometheus.NewGauge(getOptsByPahse(wfv1.NodePending)),
-		wfv1.NodeRunning:   prometheus.NewGauge(getOptsByPahse(wfv1.NodeRunning)),
-		wfv1.NodeSucceeded: prometheus.NewGauge(getOptsByPahse(wfv1.NodeSucceeded)),
-		wfv1.NodeSkipped:   prometheus.NewGauge(getOptsByPahse(wfv1.NodeSkipped)),
-		wfv1.NodeFailed:    prometheus.NewGauge(getOptsByPahse(wfv1.NodeFailed)),
-		wfv1.NodeError:     prometheus.NewGauge(getOptsByPahse(wfv1.NodeError)),
+		wfv1.NodePending:   prometheus.NewGauge(getOptsByPhase(wfv1.NodePending)),
+		wfv1.NodeRunning:   prometheus.NewGauge(getOptsByPhase(wfv1.NodeRunning)),
+		wfv1.NodeSucceeded: prometheus.NewGauge(getOptsByPhase(wfv1.NodeSucceeded)),
+		wfv1.NodeSkipped:   prometheus.NewGauge(getOptsByPhase(wfv1.NodeSkipped)),
+		wfv1.NodeFailed:    prometheus.NewGauge(getOptsByPhase(wfv1.NodeFailed)),
+		wfv1.NodeError:     prometheus.NewGauge(getOptsByPhase(wfv1.NodeError)),
 	}
 
 	for _, wf := range wfs {
